@@ -12,8 +12,7 @@ class BowlingGame:
         self.current_roll = 0
 
     def roll(self, pins):
-        """
-        Records a roll in the game.
+        """Records a roll in the game.
 
         Args:
             pins: Number of pins knocked down in this roll
@@ -22,7 +21,43 @@ class BowlingGame:
         self.current_roll += 1
 
     def score(self):
-        """Calculate the score for the current game."""
+        """Calculate the score for the current game.
+        
+        
+        This is an explanation of the algorythm.
+
+        Each cycle the roll_index increases by:
+            1 if it's a "Strike" or "Open frame"
+            2 if it's Spare
+
+        Similarily, frame_index:
+            Increases by 1 if it's an "Open frame"
+            Resets to 0 if it's a "Strike" or a "Spare"
+            Resets to 0 if it's value reaches 2
+
+        The algorythm is as follows:
+            If frame_index equals to 2, it's reset to 0
+
+            If it's a "Strike", frame index is reset to 0, index is incremented by 1 
+            and "Strike" rules apply to the score
+
+            If current and next rolls together equal to 10, it is considered "Spare",
+            in which case frame index is reset to 0, index is incremented by 2 
+            and "Spare" rules applied to the score
+
+                However, if during "Spare" frame index is equals to 1, 
+                this means that next roll doesn't belong to this frame, 
+                therefore it isn't s spare
+
+            If no other conditions are met this considered an "Open frame"
+            roll and frame indexes are incremented by 1 
+            and value of the current roll simply added to the score
+        
+        
+
+        Returns:
+            The total score of the game
+        """
         score = 0
         roll_index = 0
         frame_index = 0
@@ -67,11 +102,10 @@ class BowlingGame:
         return score
 
     def _is_strike(self, roll_index):
-        """
-        Check if the roll at frame_index is a strike.
+        """Check if the roll at roll_index is a strike.
 
         Args:
-            frame_index: Index of the roll to check
+            roll_index: Index of the roll to check
 
         Returns:
             True if the roll is a strike, False otherwise
@@ -79,11 +113,10 @@ class BowlingGame:
         return roll_index < len(self.rolls) and self.rolls[roll_index] == 10
 
     def _is_spare(self, roll_index):
-        """
-        Check if the rolls at frame_index and frame_index + 1 form a spare.
+        """Check if the rolls at roll_index and roll_index + 1 form a spare.
 
         Args:
-            frame_index: Index of the first roll in a frame
+            roll_index: Index of the first roll in a frame
 
         Returns:
             True if the rolls form a spare, False otherwise
@@ -91,25 +124,23 @@ class BowlingGame:
         return roll_index + 1 < len(self.rolls) and self.rolls[roll_index] + self.rolls[roll_index + 1] == 10
 
     def _strike_bonus(self, roll_index):
-        """
-        Calculate the bonus for a strike.
+        """Calculate the bonus for a strike.
 
         Args:
-            frame_index: Index of the strike roll
+            roll: Index of the strike roll
 
         Returns:
             The value of the next two rolls after the strike
         """
         return (self.rolls[roll_index + 1] + self.rolls[roll_index + 2])
 
-    def _spare_bonus(self, frame_index):
-        """
-        Calculate the bonus for a spare.
+    def _spare_bonus(self, roll_index):
+        """Calculate the bonus for a spare.
 
         Args:
-            frame_index: Index of the first roll in a spare
+            roll_index: Index of the first roll in a spare
 
         Returns:
             The value of the roll after the spare
         """
-        return self.rolls[frame_index + 2]
+        return self.rolls[roll_index + 2]

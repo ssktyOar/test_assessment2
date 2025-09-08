@@ -1,0 +1,15 @@
+site_name: "My Library"
+
+theme:
+  name: "material"
+
+plugins:
+- mkdocstrings:
+    enabled: !ENV [ENABLE_MKDOCSTRINGS, true]
+    default_handler: python
+    locale: en
+    handlers:
+      python:
+        options:
+          show_source: false
+        paths: [bowling_game.py]
