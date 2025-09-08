@@ -31,13 +31,10 @@ class BowlingGame:
             print()
             print("Score: " + str(score))
             if not (frame_index < len(self.rolls)):
-                print("Final frame index: " + str(frame_index))
-                print()
                 break
             print("Frame index: " + str(frame_index))
             if self._is_strike(frame_index):
                 if not (frame_index + 2 < len(self.rolls)):
-                    print("Final frame index: " + str(frame_index))
                     break
                 # Strike
                 score += 10 + self._strike_bonus(frame_index)
@@ -49,10 +46,14 @@ class BowlingGame:
                 # Spare
                 score += 10 + self._spare_bonus(frame_index)
                 frame_index += 2
+                if (frame_index + 1) == len(self.rolls):
+                    break
             else:
                 # Open frame
                 score += self.rolls[frame_index]
                 frame_index += 1
+        print()
+        print("Final frame index: " + str(frame_index))
         print("Rolls: " + str(len(self.rolls)))
         return score
 
