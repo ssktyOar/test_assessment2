@@ -1,10 +1,10 @@
 import pytest
 from bowling_game import BowlingGame
 
-rollsNormal = [10, 3, 6, 5, 5, 8, 10, 10, 10, 9, 0, 7, 3, 10, 10, 8]
+rollsNormal = [10, 3, 6, 5, 5, 8, 1, 10, 10, 10, 9, 0, 7, 3, 10, 10, 8]
 @pytest.mark.parametrize("_count_numbers,expected,rolls", [
     (3, 28, rollsNormal),
-    (4, 55, rollsNormal)
+    (7, 55, rollsNormal)
     ])
 def testGame(_count_numbers: int, expected: int, rolls: list):
 
