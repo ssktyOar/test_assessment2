@@ -27,7 +27,8 @@ class BowlingGame:
         frame_index = 0
 
         for frame in range(9):
-            frame_index = frame
+            if not frame_index < len(self.rolls):
+                break
             if self._is_strike(frame_index):
                 # Strike
                 score += 10 + self._strike_bonus(frame_index)
