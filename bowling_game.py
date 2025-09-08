@@ -25,22 +25,33 @@ class BowlingGame:
         """Calculate the score for the current game."""
         score = 0
         frame_index = 0
-
-        for frame in range(9):
-            if not frame_index < len(self.rolls):
+        print(self.rolls)
+        print()
+        while True:
+            if not (frame_index < len(self.rolls)):
+                print("Final frame index: " + str(frame_index))
                 break
+            print("Frame index: " + str(frame_index))
+            print("Score: " + str(score))
+            print()
             if self._is_strike(frame_index):
+                if not (frame_index + 2 < len(self.rolls)):
+                    print("Final frame index: " + str(frame_index))
+                    break
                 # Strike
                 score += 10 + self._strike_bonus(frame_index)
                 frame_index += 1
             elif self._is_spare(frame_index):
+                if not (frame_index + 2 < len(self.rolls)):
+                    print("Final frame index: " + str(frame_index))
+                    break
                 # Spare
                 score += 10 + self._spare_bonus(frame_index)
                 frame_index += 2
             else:
                 # Open frame
                 score += self.rolls[frame_index]
-                frame_index += 2
+                frame_index += 1
 
         return score
 
@@ -78,7 +89,7 @@ class BowlingGame:
         Returns:
             The value of the next two rolls after the strike
         """
-        return self.rolls[frame_index + 1] + self.rolls[frame_index + 2]
+        return (self.rolls[frame_index + 1] + self.rolls[frame_index + 2])
 
     def _spare_bonus(self, frame_index):
         """
